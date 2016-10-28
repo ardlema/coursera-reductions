@@ -2,9 +2,10 @@
 
 In this assignment, you will implement several variants of reduction and prefix sum algorithms. Each of the three parts of the assignment will exercise a different aspect of parallel programming:
 
-choosing the right parallelization threshold
-identifying the correct reduction operator
-identifying the correct prefix sum operator
+* choosing the right parallelization threshold
+* identifying the correct reduction operator
+* identifying the correct prefix sum operator
+
 We will use the parallel construct, defined in the package common, as in the lecture to start parallel computations. Every parallel construct invocation takes two tasks as input and outputs the corresponding results as a tuple of two elements. It is not allowed to use the task construct in this assignment.
 
 ## Parallel Counting Change
