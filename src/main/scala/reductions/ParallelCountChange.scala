@@ -47,9 +47,8 @@ object ParallelCountChange {
    */
   def countChange(money: Int, coins: List[Int]): Int = {
     coins match {
-      case Nil => if (money == 0) 1 else 0
       case h :: t if (money >= h) => countChange(money - h, coins) + countChange(money, t)
-      case h :: t => if (money == 0) 1 else 0
+      case _ => if (money == 0) 1 else 0
     }
   }
 
