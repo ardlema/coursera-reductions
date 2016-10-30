@@ -44,6 +44,4 @@ class ParallelParenthesesBalancingSuite extends FunSuite {
     check("(.", false)
     check(").", false)
   }
-
-
 }
