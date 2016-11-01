@@ -61,27 +61,34 @@ object ParallelParenthesesBalancing {
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
 
     @tailrec
-    def traverse(idx: Int, until: Int, arg1: Int, arg2: Int) : Int = {
+    def traverse(idx: Int, until: Int, arg1: Int, arg2: Int) : (Int, Int) = {
       idx match {
-        case x if (x == until) => arg1 - arg2
+        case x if (x == until) => (arg1, arg2)
         case _ if (chars(idx).equals('(')) => traverse(idx + 1, until, arg1 + 1, arg2)
-        case _ if (chars(idx).equals(')')) => traverse(idx + 1, until, arg1, arg2 + 1)
+        case _ if (chars(idx).equals(')')) =>
+          if (arg1 > 0) traverse(idx + 1, until, arg1 - 1, arg2)
+          else traverse(idx + 1, until, arg1, arg2 + 1)
         case _ => traverse(idx + 1, until, arg1, arg2)
       }
     }
 
-    def reduce(from: Int, until: Int): Int = {
+    def reduce(from: Int, until: Int): (Int, Int) = {
       val elements = until - from
       if (elements <= threshold) traverse(from, until, 0, 0)
       else {
-        val (l, r) = parallel(
-          reduce(from, (elements / 2) - 1),
-          reduce(elements / 2, until))
-        l - r
+        val halfSize = elements / 2
+        val ((l1, r1), (l2, r2)) = parallel(
+          reduce(from, from + halfSize),
+          reduce(from + halfSize, until))
+        if (l1 > r2) {
+          (l1 - r2 + l2) -> r1
+        } else {
+          l2 -> (r2 - l1 + r1)
+        }
       }
     }
 
-    reduce(0, chars.length) == 0
+    reduce(0, chars.length) == (0, 0)
   }
 
   // For those who want more:
