@@ -34,7 +34,12 @@ object LineOfSight {
   def max(a: Float, b: Float): Float = if (a > b) a else b
 
   def lineOfSight(input: Array[Float], output: Array[Float]): Unit = {
-    ???
+    var currentMax = 0F
+    for (i <-1 to input.length - 1) {
+      val tangent = input(i) / i
+      currentMax = max(tangent, currentMax)
+      output(i) = currentMax
+    }
   }
 
   sealed abstract class Tree {
