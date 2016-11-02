@@ -40,6 +40,7 @@ object ParallelParenthesesBalancing {
 
   /** Returns `true` if the parentheses in the input `chars` are balanced.
    */
+  //NEED TO BE IMPROVED IN TERMS OF PERF. WHERE IS THE BOTTLENECK??? CHARS.SIZE???
   def balance(chars: Array[Char]): Boolean = {
     def isBalanced(chars: Array[Char], acc: Int): Boolean = {
       if (acc < 0) false
